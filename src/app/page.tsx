@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import DifficultySelector from './components/DifficultySelector';
 import GameBoard from './components/GameBoard';
+import WinScreen from './components/WinScreen';
 import { Difficulty } from './lib/types';
 
 type GameState =
@@ -44,29 +45,14 @@ export default function Home() {
       )}
 
       {gameState.screen === 'complete' && (
-        <div className="flex flex-col items-center gap-6 text-center">
-          <p className="text-2xl font-bold text-green-700">Congratulations!</p>
-          <p className="text-gray-600">
-            You completed the{' '}
-            <span className="font-semibold capitalize">{gameState.difficulty}</span> game!
-          </p>
-          <div className="flex gap-4">
-            <button
-              onClick={() =>
-                setGameState({ screen: 'playing', difficulty: gameState.difficulty })
-              }
-              className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow transition-colors"
-            >
-              Play Again
-            </button>
-            <button
-              onClick={handleBack}
-              className="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl shadow transition-colors"
-            >
-              Change Difficulty
-            </button>
-          </div>
-        </div>
+        <WinScreen
+          difficulty={gameState.difficulty}
+          time={gameState.time}
+          onPlayAgain={() =>
+            setGameState({ screen: 'playing', difficulty: gameState.difficulty })
+          }
+          onChangeDifficulty={handleBack}
+        />
       )}
     </main>
   );
